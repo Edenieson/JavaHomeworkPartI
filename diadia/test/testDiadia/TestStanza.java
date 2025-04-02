@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import diadia.Stanza;
+import it.uniroma3.diadia.ambienti.Stanza;
 
 class TestStanza {
 	

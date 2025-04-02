@@ -1,4 +1,6 @@
-package diadia;
+package it.uniroma3.diadia.ambienti;
+
+import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 /**
  * Classe Stanza - una stanza in un gioco di ruolo.
@@ -167,8 +169,23 @@ public class Stanza {
 	 * @param nomeAttrezzo
 	 * @return true se l'attrezzo e' stato rimosso, false altrimenti
 	 */
-	public boolean removeAttrezzo(Attrezzo attrezzo) {
+	public boolean removeAttrezzo(Attrezzo attrezzo) { //Punto 3 dell'homework A
 		// TODO da implementare
+		int indiceDaRimuovere = 0;
+		for(int i=0; i<numeroAttrezzi; i++) {
+			if(attrezzi[i].equals(attrezzo)) {
+				//metodo che mette l'attrezzo nella borsa				
+				//
+				for(int j = indiceDaRimuovere+1; j<numeroAttrezzi; j++) {
+					attrezzi[j-1] = attrezzi[j];
+				}
+				attrezzi[numeroAttrezzi-1] = null;
+				numeroAttrezzi--;
+				return true;
+			}
+			indiceDaRimuovere++;
+		}
+		
 		return false;
 	}
 

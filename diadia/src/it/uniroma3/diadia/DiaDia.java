@@ -1,7 +1,11 @@
-package diadia;
+package it.uniroma3.diadia;
 
 
 import java.util.Scanner;
+
+import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.giocatore.Borsa;
 
 /**
  * Classe principale di diadia, un semplice gioco di ruolo ambientato al dia.
@@ -27,12 +31,14 @@ public class DiaDia {
 			"o regalarli se pensi che possano ingraziarti qualcuno.\n\n"+
 			"Per conoscere le istruzioni usa il comando 'aiuto'.";
 	
-	static final private String[] elencoComandi = {"vai", "aiuto", "fine"};
+	static final private String[] elencoComandi = {"vai", "prendi", "posa", "aiuto", "fine"};
 
 	private Partita partita;
+	private Borsa borsa;
 
 	public DiaDia() {
 		this.partita = new Partita();
+		this.borsa = new Borsa();
 	}
 
 	public void gioca() {
@@ -64,6 +70,10 @@ public class DiaDia {
 			this.vai(comandoDaEseguire.getParametro());
 		else if (comandoDaEseguire.getNome().equals("aiuto"))
 			this.aiuto();
+		else if(comandoDaEseguire.getNome().equals("prendi"))
+			this.prendi(comandoDaEseguire.getParametro());
+		else if(comandoDaEseguire.getNome().equals("posa"))
+			this.posa(comandoDaEseguire.getParametro());
 		else
 			System.out.println("Comando sconosciuto");
 		if (this.partita.vinta()) {
@@ -101,6 +111,50 @@ public class DiaDia {
 			this.partita.getGiocatore().setCfu(cfu--);
 		}
 		System.out.println(partita.getStanzaCorrente().getDescrizione());
+	}
+	
+	//Comando "Prendi"
+	private void prendi(String nomeAttrezzo) { //Da testare 
+		if(nomeAttrezzo == null) {
+			System.out.println("Quale attrezzo vuoi prendere?"); //Tutto questo pezzo serve a ricordare all'utente gli attrezzi che ci sono nella stanza
+			//Faccio uno String Builder per ricordare all'utente 
+			//Gli attrezzi nella stanza
+			Stanza stanzaCorrente = partita.getStanzaCorrente();
+			
+			StringBuilder attrezziInStanza = new StringBuilder();
+			attrezziInStanza.append(stanzaCorrente.getNome());
+			attrezziInStanza.append("\nAttrezzi nella stanza: ");		
+	    	for (Attrezzo attrezzo : stanzaCorrente.getAttrezzi()) 
+	    		if(attrezzo!=null)
+	    			attrezziInStanza.append(stanzaCorrente.getAttrezzo(nomeAttrezzo).toString()+" ");
+	    	return;
+		}
+		Stanza stanzaCorrente = partita.getStanzaCorrente();
+		if(stanzaCorrente.hasAttrezzo(nomeAttrezzo)) {
+			borsa.addAttrezzo(stanzaCorrente.getAttrezzo(nomeAttrezzo));
+			stanzaCorrente.removeAttrezzo(stanzaCorrente.getAttrezzo(nomeAttrezzo));
+			System.out.println("Attrezzo preso!");
+		}
+		System.out.println("Attrezzo non trovato!");
+		return;
+	}
+	
+	//Comando "Posa"
+	private void posa(String nomeAttrezzo) {
+		if(nomeAttrezzo == null) {
+			System.out.println("Quale attrezzo vuoi posare?");
+			borsa.toString();
+			return;
+		}
+		if(!borsa.hasAttrezzo(nomeAttrezzo)) {
+			System.out.println("Attrezzo non trovato!");
+			return;
+		}
+		Stanza stanzaCorrente = partita.getStanzaCorrente();
+		stanzaCorrente.addAttrezzo(borsa.getAttrezzo(nomeAttrezzo));
+		borsa.removeAttrezzo(borsa.getAttrezzo(nomeAttrezzo));
+		System.out.println("Attrezzo posato!");
+		return;
 	}
 
 	/**
