@@ -61,10 +61,9 @@ public class Borsa {
 	//Metodo per rimuovere un oggetto dalla borsa
 	public boolean removeAttrezzo(Attrezzo attrezzo) { //Punto 3 dell'homework A
 		// TODO da implementare
-		if(this.isEmpty()) {
-			System.out.println("Borsa vuota!");
+		if(this.isEmpty()) 
 			return false;
-		}
+		
 		int indiceDaRimuovere = 0;
 		for(int i=0; i<numeroAttrezzi; i++) {
 			if(attrezzi[i].equals(attrezzo)) {
