@@ -32,11 +32,10 @@ public class DiaDia {
 	static final private String[] elencoComandi = {"vai", "prendi", "posa", "aiuto", "fine"};
 
 	private Partita partita;
-	private Borsa borsa;
+
 
 	public DiaDia() {
 		this.partita = new Partita();
-		this.borsa = new Borsa();
 	}
 
 	public void gioca(IOConsole console) {
@@ -130,7 +129,7 @@ public class DiaDia {
 		}
 		Stanza stanzaCorrente = partita.getStanzaCorrente();
 		if(stanzaCorrente.hasAttrezzo(nomeAttrezzo)) {
-			borsa.addAttrezzo(stanzaCorrente.getAttrezzo(nomeAttrezzo));
+			partita.getGiocatore().borsaGiocatore().addAttrezzo(stanzaCorrente.getAttrezzo(nomeAttrezzo));
 			stanzaCorrente.removeAttrezzo(stanzaCorrente.getAttrezzo(nomeAttrezzo));
 			console.mostraMessaggio("Attrezzo preso!");
 		}
@@ -142,20 +141,20 @@ public class DiaDia {
 	private void posa(String nomeAttrezzo, IOConsole console) {
 		if(nomeAttrezzo == null) {
 			console.mostraMessaggio("Quale attrezzo vuoi posare?");
-			borsa.toString();
+			partita.getGiocatore().borsaGiocatore().toString();
 			return;
 		}
-		if(borsa.isEmpty()) {
+		if(partita.getGiocatore().borsaGiocatore().isEmpty()) {
 			console.mostraMessaggio("Borsa vuota!");
 			return;
 		}
-		if(!borsa.hasAttrezzo(nomeAttrezzo)) {
+		if(!partita.getGiocatore().borsaGiocatore().hasAttrezzo(nomeAttrezzo)) {
 			console.mostraMessaggio("Attrezzo non trovato!");
 			return;
 		}
 		Stanza stanzaCorrente = partita.getStanzaCorrente();
-		stanzaCorrente.addAttrezzo(borsa.getAttrezzo(nomeAttrezzo));
-		borsa.removeAttrezzo(borsa.getAttrezzo(nomeAttrezzo));
+		stanzaCorrente.addAttrezzo(partita.getGiocatore().borsaGiocatore().getAttrezzo(nomeAttrezzo));
+		partita.getGiocatore().borsaGiocatore().removeAttrezzo(partita.getGiocatore().borsaGiocatore().getAttrezzo(nomeAttrezzo));
 		console.mostraMessaggio("Attrezzo posato!");
 		return;
 	}

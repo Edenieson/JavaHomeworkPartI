@@ -81,7 +81,8 @@ public class Borsa {
 		
 		return false;
 	}
-	
+
+	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		if(!this.isEmpty()) {
